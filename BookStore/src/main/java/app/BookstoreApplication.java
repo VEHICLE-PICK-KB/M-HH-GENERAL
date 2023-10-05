@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 
 import app.model.Category;
 import app.model.CategoryRepository;
+import app.model.AppUser;
+import app.model.AppUserRepository;
 import app.model.Book;
 import app.model.BookRepository;
 
@@ -22,15 +24,21 @@ public class BookstoreApplication {
 		SpringApplication.run(BookstoreApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository drepository) {
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository drepository, AppUserRepository urepository) {
 		return (args) -> {
 			log.info("save books");
 			drepository.save(new Category("Science"));
 			drepository.save(new Category("Fiction"));
 			drepository.save(new Category("Null"));
 			
-			repository.save(new Book("Book X", "XXXXXXX", "9999", "127379764628974", "99€", drepository.findByName("Science").get(0)));
-			repository.save(new Book("Book Y", "YYYYYYY", "9999", "8374648329744683", "89€", drepository.findByName("Fiction").get(0)));	
+			repository.save(new Book("Book X", "XXXXXXX", "2023", "0875678428485", "1000€", drepository.findByName("Science").get(0)));
+			repository.save(new Book("Book Y", "YYYYYYY", "2018", "0954897532357", "1300€", drepository.findByName("Fiction").get(0)));	
+			
+			// Create users: admin/admin user/user
+						AppUser user1 = new AppUser("DefaultUser", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
+						AppUser user2 = new AppUser("Admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "ADMIN");
+						urepository.save(user1);
+						urepository.save(user2);
 			
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {

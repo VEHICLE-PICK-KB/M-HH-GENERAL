@@ -3,6 +3,8 @@ package app.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +25,8 @@ public class Book {
 	private String price;
 	
 	 @ManyToOne
-	    @JoinColumn(name = "categoryid")
+	 @JsonIgnore
+	 @JoinColumn(name = "categoryid")
 	    private Category category;
 	
 	public Long getId() {

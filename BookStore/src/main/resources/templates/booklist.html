@@ -1,12 +1,25 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 <head>
     <title>BookList</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Books</h1>
+<div class="container">
+	<div class="col-md-4">
+		<h1>Books</h1>
+	</div>
+	<div class="col-md-4">
+		<i>Welcome <b sec:authentication="name"></b></i>, 
+        your role is <b sec:authentication="principal.authorities"></b>
+	</div>
+	<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-warning"/>
+		</form>
+	</div>
     <table class="table table-striped">
 		<tr>
 		    <th>Title</th>
@@ -14,9 +27,9 @@
 		    <th>Year</th>
 		    <th>ISBN</th>
 		    <th>Price</th>
-		    <th>Catgeory </th>
-		    <th> </th>
-		    <th> </th>
+		    <th>Category </th>
+		    <th sec:authorize="hasAuthority('ADMIN')"> Delete Books </th>
+		    <th sec:authorize="hasAuthority('ADMIN')"> Edit Books </th>
 		    
 		</tr>  
     	<tr th:each = "book : ${books}">
@@ -26,11 +39,11 @@
     		<td th:text="${book.isbn}"></td>
     		<td th:text="${book.price}"></td>
     		<td th:text="${book.category != null ? book.category.name : ''}"></td> 
-    		<td><a  th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a></td>
-    		<td><a th:href="@{/edit/{id}(id=${book.id})}">Edit</a></td>     		
+    		<td sec:authorize="hasAuthority('ADMIN')"><a  th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a></td>
+    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-primary">Edit</a></td>     		
     	</tr>
      </table> 
-     <a   href="/add" class="btn btn-success">Add Books</a>   	
-     
+     <a sec:authorize="hasAuthority('ADMIN')" href="/add" class="btn btn-success">Add Books</a>   	
+     </div>
 </body>
 </html>
