@@ -20,7 +20,7 @@ public class WebSecurityConfig  {
 	@Autowired
 	private UserDetailServiceImpl userDetailsService;
 	
-	// using lambda 
+	 
 	@Bean
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 		
@@ -33,7 +33,7 @@ public class WebSecurityConfig  {
 		)
 		.headers(headers -> headers
 				.frameOptions(frameoptions -> 
-				frameoptions.disable() //for h2 console			
+				frameoptions.disable()			
 			    )
 		)
 		.formLogin(formlogin -> formlogin

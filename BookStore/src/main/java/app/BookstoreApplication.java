@@ -34,7 +34,7 @@ public class BookstoreApplication {
 			repository.save(new Book("Book X", "XXXXXXX", "2023", "0875678428485", "1000€", drepository.findByName("Science").get(0)));
 			repository.save(new Book("Book Y", "YYYYYYY", "2018", "0954897532357", "1300€", drepository.findByName("Fiction").get(0)));	
 			
-			// Create users: admin/admin user/user
+			
 						AppUser user1 = new AppUser("DefaultUser", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
 						AppUser user2 = new AppUser("Admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "ADMIN");
 						urepository.save(user1);
