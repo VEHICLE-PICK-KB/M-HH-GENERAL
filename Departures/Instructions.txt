@@ -1,0 +1,5 @@
+Lähtevien lentojen aikataulujärjestelmä.
+Lentojen valvonnalla ja suunnittelijallla mahdollisuus kaikkiin crud toimintoihin, Asiakkaalla vain lähtevien lentojen tarkasteluun. 
+Sovellus näyttää väristatuksella, onko lento peruttu, lähtenyt, myöhässä, vai ajallaan, perustuu current dateen. 
+Tiedot tallennetaan ja haetaan tietokannasta, johon riittänee yksi taulu.
+Tarvittaessa sovellusta voi laajentaa myös lentojen varaukseen, mikäli laajuus ei riitä.  
