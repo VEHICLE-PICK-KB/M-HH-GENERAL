@@ -39,7 +39,7 @@ public class RestMethodTesting {
     private AppUserRepository appuserRepository;
 
     @Test
-    @WithMockUser(username = "testuser", roles = "ADMIN")
+    @WithMockUser(username = "Admin", roles = "ADMIN")
     public void testBookListPage() throws Exception {
         
         Mockito.when(bookRepository.findAll()).thenReturn(Arrays.asList(new Book("Book 1", null, null, null, null, null), new Book("Book 2", null, null, null, null, null)));
@@ -50,7 +50,7 @@ public class RestMethodTesting {
     }
 
     @Test
-    @WithMockUser(username = "testuser", roles = "ADMIN")
+    @WithMockUser(username = "Admin", roles = "ADMIN")
     public void testBookListRest() throws Exception {
         
         Mockito.when(bookRepository.findAll()).thenReturn(Arrays.asList(new Book("Book 1", null, null, null, null, null), new Book("Book 2", null, null, null, null, null)));
@@ -62,7 +62,7 @@ public class RestMethodTesting {
     }
 
     @Test
-    @WithMockUser(username = "testuser", roles = "ADMIN")
+    @WithMockUser(username = "Admin", roles = "ADMIN")
     public void testFindBookRest() throws Exception {
         
         Long bookId = 1L;
@@ -76,7 +76,7 @@ public class RestMethodTesting {
     }
 
     @Test
-    @WithMockUser(username = "testuser", roles = "ADMIN")
+    @WithMockUser(username = "Admin", roles = "ADMIN")
     public void testAddBookPage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/add"))
             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -84,7 +84,7 @@ public class RestMethodTesting {
     }
 
     @Test
-    @WithMockUser(username = "testuser", roles = "ADMIN")
+    @WithMockUser(username = "Admin", roles = "ADMIN")
     public void testSaveBook() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/save"))
             .andExpect(MockMvcResultMatchers.status().is3xxRedirection()) 
@@ -92,7 +92,7 @@ public class RestMethodTesting {
     }
 
     @Test
-    @WithMockUser(username = "testuser", roles = "ADMIN")
+    @WithMockUser(username = "Admin", roles = "ADMIN")
     public void testDeleteBook() throws Exception {
         Long bookId = 1L;
 
@@ -102,7 +102,7 @@ public class RestMethodTesting {
     }
 
     @Test
-    @WithMockUser(username = "testuser", roles = "ADMIN")
+    @WithMockUser(username = "Admin", roles = "ADMIN")
     public void testEditBookPage() throws Exception {
         Long bookId = 1L;
 
