@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Front End Development / React</title>
+</head>
+
+<body>
+  <!-- We will put our React component inside this div. -->
+  <div id="root"></div>
+
+  <!-- Load React & ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+  <!-- Load our React component. -->
+  <script type="text/babel">
+    function Weather() {
+      const [data, setData] = React.useState(null);
+
+      React.useEffect(() => {
+        fetch("https://api.openweathermap.org/data/2.5/weather?q=SEOUL&APPID=bdaf120e74c61efc1fe9a4b653dc24b2")
+          .then(response => response.json())
+          .then(responseData => {
+            setData(responseData);
+          })
+          .catch(error => {
+            console.error("Error fetching data:", error);
+          });
+      }, []);
+      
+
+      return (
+        //--- ? (instanssi) : (instanssi2) = if/else=true/false
+    <div>
+      {data ? (
+        <div>
+          <p>Temperature: {Math.round(data.main.temp - 273.15)}°C (Celsius)</p>
+          <p>Weather: {data.weather[0].description}</p>
+          <img src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`} alt="Weather Icon" />
+        </div>
+      ) : (
+        <div> </div>
+      )}
+    </div>
+  );}
+
+
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<Weather />);
+  </script>
+</body>
+
+</html>

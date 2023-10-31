@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Front End Development / React</title>
+</head>
+
+<body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- Load our React component. -->
+    <script type="text/babel">
+
+        const Git = () => {
+            const [api, setApi] = React.useState([]);
+
+
+
+            React.useEffect(() => {
+                fetch("https://api.github.com/search/repositories?q=react").then(response => response.json()).then(responseData => {
+                    setApi(responseData.items)
+                })
+            }, []
+
+            );
+            return (
+                <div>
+                    <h1>Repositories</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>URL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {api.map((asx, index) => (
+                                <tr key={index}>
+                                    <td>{asx.full_name}</td>
+                                    <td><a href={asx.owner.url}>{asx.owner.url}</a></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<Git />, document.getElementById("root"));
+    </script>
+</body>
+
+</html>
