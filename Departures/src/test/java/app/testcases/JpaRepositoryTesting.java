@@ -28,7 +28,7 @@ public class JpaRepositoryTesting {
 
     @Test
     public void testSaveAndFindFlight() {
-        Flight flight = new Flight("Test Number", "Test Company", 1, null, null, null);
+        Flight flight = new Flight("Test Number", "Test Company", 0, null, null, null);
         flightRepository.save(flight);
 
         Flight foundFlight = flightRepository.findById(flight.getId()).orElse(null);
@@ -39,7 +39,7 @@ public class JpaRepositoryTesting {
 
     @Test
     public void testDeleteFlight() {
-        Flight flight = new Flight("Test Number", "Test Company", 0, null, null, null);
+        Flight flight = new Flight("Test Number", "Test Company", 1, null, null, null);
         flightRepository.save(flight);
 
         flightRepository.deleteById(flight.getId());

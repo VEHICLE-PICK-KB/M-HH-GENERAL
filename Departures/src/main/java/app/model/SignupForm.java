@@ -3,16 +3,16 @@ package app.model;
 import jakarta.validation.constraints.*;
 
 public class SignupForm {
-    @NotEmpty
-    @Size(min=5, max=30)
+    @NotEmpty (message= " ")
+    @Size(min=4, max=30, message = "Käyttäjänimessä on oltava vähintään neljä merkkiä.")
     private String username = "";
 
-    @NotEmpty
-    @Size(min=7, max=30)
+    @NotEmpty (message= " ")
+    @Size(min=4, max=30, message = "Salasanassa on oltava vähintään neljä merkkiä.")
     private String password = "";
 
-    @NotEmpty
-    @Size(min=7, max=30)
+    @NotEmpty (message= " ")
+    @Size(min=4, max=30, message = "Salasana ei täsmää.")
     private String passwordCheck = "";
 
     @NotEmpty

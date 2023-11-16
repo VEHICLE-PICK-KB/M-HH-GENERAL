@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Booklist</title>
+    <title>FLightlist</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
@@ -12,19 +12,22 @@
 <form th:object="${flight}" th:action="@{../save}" action="#" method="post">
 <input type="hidden" th:field="*{id}" class="form-control"/>
 <label for="Number">Number</label>
-<input type="text" id="Nbr" th:field="*{number}" class="form-control" />
+<input type="text" id="Nbr" th:field="*{number}" class="form-control" required/>
 <label for="Company">Company</label>
-<input type="text" id="comp" th:field="*{company}" class="form-control" />
+<input type="text" id="comp" th:field="*{company}" class="form-control" required />
 <label for="Arrival">Arrival</label>
-<input type="date" id="arrival" th:field="*{arrival}" class="form-control" />
+<select id="arrival" th:field="*{arrival}" class="form-control" required>
+<option value="0">0</option>
+<option value="1">1</option>
+</select>
 <label for="Estimated Departure">Estimated Departure</label>
-<input type="date" id="estdepart" th:field="*{estdepart}" class="form-control" />
+<input type="date" id="estdepart" th:field="*{estdepart}" class="form-control" required />
 <label for="Departure">Departure</label>
-<input type="date" id="departure" th:field="*{departure}" class="form-control" />
+<input type="date" id="departure" th:field="*{departure}" class="form-control" required/>
 
 <div style="clear: both; display: block; height: 10px;"></div>						
 <label for="typelist">Type</label>
-<select id="typelist" th:field="*{type}" class="form-control">
+<select id="typelist" th:field="*{type}" class="form-control" required>
 <option th:each="type: ${types}" th:value="${type.typeid}" th:text="${type.name}"></option>
 </select>
 			

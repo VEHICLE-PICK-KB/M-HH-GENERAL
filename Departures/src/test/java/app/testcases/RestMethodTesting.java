@@ -42,7 +42,7 @@ public class RestMethodTesting {
     @WithMockUser(username = "Admin", roles = "ADMIN")
     public void testFlightListPage() throws Exception {
         
-        Mockito.when(flightRepository.findAll()).thenReturn(Arrays.asList(new Flight("Flight X", null, 1, null, null, null), new Flight("Flight Y", null, 0, null, null, null)));
+        Mockito.when(flightRepository.findAll()).thenReturn(Arrays.asList(new Flight("Flight X", null, 0, null, null, null), new Flight("Flight Y", null, 0, null, null, null)));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/flightlist"))
             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -53,7 +53,7 @@ public class RestMethodTesting {
     @WithMockUser(username = "Admin", roles = "ADMIN")
     public void testFlightListRest() throws Exception {
         
-        Mockito.when(flightRepository.findAll()).thenReturn(Arrays.asList(new Flight("Flight X", null, 1, null, null, null), new Flight("Flight Y", null, 0, null, null, null)));
+        Mockito.when(flightRepository.findAll()).thenReturn(Arrays.asList(new Flight("Flight X", null, 0, null, null, null), new Flight("Flight Y", null, 0, null, null, null)));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/flights"))
             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -66,7 +66,7 @@ public class RestMethodTesting {
     public void testFindFlightRest() throws Exception {
         
         Long flightId = 1L;
-        Flight flight = new Flight("Test Flight", null, 1, null, null, null);
+        Flight flight = new Flight("Test Flight", null, 0, null, null, null);
         Mockito.when(flightRepository.findById(flightId)).thenReturn(Optional.of(flight));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/flight/{id}", flightId))

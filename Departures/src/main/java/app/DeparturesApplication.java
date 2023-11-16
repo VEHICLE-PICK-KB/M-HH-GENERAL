@@ -38,17 +38,20 @@ public class DeparturesApplication {
 	@Bean
 	public CommandLineRunner flightTest(FlightRepository repository, TypeRepository trepository, AppUserRepository urepository, PasswordEncoder passwordEncoder) {
 		return (args) -> {
-			log.info("Refresh flights");
-			trepository.save(new Type("Commercial"));
-			trepository.save(new Type("VIP"));
-			trepository.save(new Type("Private"));
-			trepository.save(new Type("Freight"));
-			trepository.save(new Type("Military"));
-				
-			AppUser user1 = new AppUser("Customer", passwordEncoder.encode("customer"), "USER");
-			AppUser user2 = new AppUser("Admin", passwordEncoder.encode("admin"), "ADMIN");
-			urepository.save(user1);
-			urepository.save(user2);
+			log.info("Running");
+			//Käytä vain H2-kannassa
+			//trepository.save(new Type("Commercial"));
+			//trepository.save(new Type("VIP"));
+			//trepository.save(new Type("Private"));
+			//trepository.save(new Type("Freight"));
+			//trepository.save(new Type("Military"));
+		
+
+			//Käytä vain H2-kannassa	
+			//AppUser user1 = new AppUser("Customer", passwordEncoder.encode("customer"), "USER");
+			//AppUser user2 = new AppUser("Admin", passwordEncoder.encode("admin"), "ADMIN");
+			//urepository.save(user1);
+			//urepository.save(user2);
 			
 			log.info("fetch all flights");
 			for (Flight flight : repository.findAll()) {

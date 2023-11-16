@@ -1,54 +1,78 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 <head>
     <title>FlightList</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        .legend {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .legend-item {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .legend-item .color-box {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-	<div class="col-md-4">
-		<h1>Flights</h1>
-	</div>
-	<div class="col-md-4">
-		<i>Welcome <b sec:authentication="name"></b></i>, 
-        you are logged in as <b sec:authentication="principal.authorities"></b>
-	</div>
-	<div class="col-md-4" style="padding:20px 0">
-		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-sm btn-warning"/>
-		</form>
-	</div>
+    <div class="col-md-4">
+        <h1>Flights</h1>
+    </div>
+    <div class="col-md-4">
+        <i>Welcome <b sec:authentication="name"></b></i>!
+    </div>
+    <div class="col-md-4" style="padding:20px 0">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out" class="btn btn-sm btn-warning"/>
+        </form>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="color-box" style="background-color: #d4edda;"></div>
+            <span>Aikataulussa</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background-color: #f8d7da;"></div>
+            <span>Myöhässä</span>
+        </div>
+    </div>
+
     <table class="table table-striped">
-		<tr>
-		    <th>Number</th>
-		    <th>Company</th>
-		    <th>Arrival</th>
-		    <th>Estimated Departure</th>
-		    <th>Departure</th>
-		    <th>Type</th>
-		    <th sec:authorize="hasAuthority('ADMIN')"> Remove Flight Data </th>
-		    <th sec:authorize="hasAuthority('ADMIN')"> Edit Flight Data </th>
-		    
-		</tr>  
-    	    <tr th:each = "flight : ${flights}">
-    		<td th:text="${flight.number}"></td>
-    		<td th:text="${flight.company}"></td>
-    		<td th:text="${flight.arrival}"></td>
-    		<td th:text="${flight.estdepart}"></td>
-    		<td th:text="${#temporals.format(flight.estdepart, 'dd.MM.yyyy')}"></td>
-    		
-    		
-    		
-    		<td th:text="${flight.departure}"></td>
-    		<td th:text="${flight.type != null ? flight.type.name : ''}"></td> 
-    		<td sec:authorize="hasAuthority('ADMIN')"><a  th:href="@{/delete/{id}(id=${flight.id})}" class="btn btn-danger">Delete</a></td>
-    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${flight.id})}" class="btn btn-primary">Edit</a></td>     		
-    	</tr>
-     </table> 
-     <a sec:authorize="hasAuthority('ADMIN')" href="/add" class="btn btn-success">Add New Flight Data</a>   	
-     </div>
+        <tr>
+            <th>Number</th>
+            <th>Company</th>
+            <th>Estimated Departure</th>
+            <th>Departure</th>
+            <th>Type</th>
+            <th sec:authorize="hasAuthority('ADMIN')"> Remove Flight Data </th>
+            <th sec:authorize="hasAuthority('ADMIN')"> Edit Flight Data </th>
+        </tr>
+        <tr th:each="flight : ${flights}" th:class="${(flight.arrival == 1) ? 'table-success' : 'table-danger'}">
+            <td th:text="${flight.number}"></td>
+            <td th:text="${flight.company}"></td>
+            <td th:text="${#temporals.format(flight.estdepart, 'dd.MM.yyyy')}"></td>
+            <td th:text="${#temporals.format(flight.departure, 'dd.MM.yyyy')}"></td>
+            <td th:text="${flight.type != null ? flight.type.name : ''}"></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${flight.id})}" class="btn btn-danger">Delete</a></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${flight.id})}" class="btn btn-primary">Edit</a></td>
+        </tr>
+    </table>
+    <a sec:authorize="hasAuthority('ADMIN')" href="/add" class="btn btn-success">Add New Flight Data</a>
+</div>
+
 </body>
 </html>

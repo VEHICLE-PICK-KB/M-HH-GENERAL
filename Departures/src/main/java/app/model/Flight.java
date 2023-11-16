@@ -23,7 +23,8 @@ public class Flight {
     private int arrival;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate estdepart;
-    private String departure;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private LocalDate departure;
 
     @ManyToOne
     @JsonIgnore
@@ -33,7 +34,7 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(String number, String company, int arrival, LocalDate estdepart, String departure, Type type) {
+    public Flight(String number, String company, int arrival, LocalDate estdepart, LocalDate departure, Type type) {
         super();
         this.number = number;
         this.company = company;
@@ -92,11 +93,11 @@ public class Flight {
         this.estdepart = estdepart;
     }
 
-    public String getDeparture() {
+    public LocalDate getDeparture() {
         return departure;
     }
 
-    public void setDeparture(String departure) {
+    public void setDeparture(LocalDate departure) {
         this.departure = departure;
     }
 }
