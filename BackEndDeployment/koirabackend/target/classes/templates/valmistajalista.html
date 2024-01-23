@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<title>Koiranvaatekauppa</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h2>Valmistajat</h2>
+	<table>
+		<tr>
+			<th>Nimi</th>
+			<th></th>
+		</tr>
+		<tr th:each="valmistaja : ${valmistajat}">
+			<td th:text="${valmistaja.nimi}"></td>
+			<td><a
+				th:if="${#authorization.expression('hasRole(''ADMIN'')')}" href="#"
+				th:attr="data-valmistajaId=${valmistaja.id},data-tuotteita=${valmistaja.tuotteet.size()}"
+				class="delete-button"><button>Poista</button></a> <!--  th:if="${#authorization.expression('hasRole(''ADMIN'')')}"-->
+			</td>
+			<td><a th:href="@{'/tuotelista/' + ${valmistaja.id}}"><button> Valmistajan tuotteet</button></a></td>
+
+		</tr>
+	</table>
+
+
+	<!-- Vahvistusikkuna valmistajan poistolle -->
+	<div id="confirmDelete" style="display: none;">
+		<!--  <p>Valmistajalla on kirjattuja tuotteita järjestelmässä. valmistajaa ei voida poistaa</p>-->
+		<p>Valmistajalla on kirjattuja tuotteita järjestelmässä.
+			Valmistajan poistamalla myös valmistajan tuotteet poistuvat. Haluatko
+			varmasti poistaa valmistajan?</p>
+		<button>
+			<a th:href="@{/deleteValmistaja/{id}(id=${valmistajaId})}"
+				class="btn btn-danger" id="confirmDeleteButton">Kyllä, poista</a>
+		</button>
+		<button>
+			<a href="#" id="cancelDeleteButton" class="btn">Peruuta</a>
+		</button>
+	</div>
+
+	<br>
+	<a href="https://softala.haaga-helia.fi:8075/index">
+		<button>Etusivulle</button>
+	</a>
+
+	<div sec:authorize="!isAuthenticated()">
+		<a href="https://softala.haaga-helia.fi:8075/login">
+			<button>Kirjaudu sisään</button>
+		</a>
+	</div>
+	<div>
+		<form action="/tuotelista" method="get">
+			<button type="submit">Tuotelista</button>
+		</form>
+	</div>
+	<div sec:authorize="isAuthenticated()">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Kirjaudu ulos" />
+		</form>
+	</div>
+
+	<script type="text/javascript">
+        // JS-koodi vahvistusikkunalle
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        const confirmDelete = document.getElementById('confirmDelete');
+        const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+        const cancelDeleteButton = document.getElementById('cancelDeleteButton');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const valmistajaId = button.getAttribute('data-valmistajaId');
+                const tuotteita = parseInt(button.getAttribute('data-tuotteita'));
+                if (tuotteita > 0) {
+           
+                    confirmDeleteButton.href = `/deleteValmistaja/${valmistajaId}`;
+                    confirmDelete.style.display = 'block';
+                	//vaihtoehtoinen, mikäli halutaan, ettei voi poistaa ollenkaan alert("Valmistajalla on kirjattuja tuotteita järjestelmässä. valmistajaa ei voida poistaa");
+                } else {
+                   
+                    window.location.href = `/deleteValmistaja/${valmistajaId}`;
+                }
+            });
+        });
+
+        cancelDeleteButton.addEventListener('click', function () {
+            confirmDelete.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

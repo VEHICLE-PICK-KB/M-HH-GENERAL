@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+  <head>
+    <title>Koiranvaatekauppa</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <h2>Asiakaslista</h2>
+
+
+    <table>
+      <tr>
+        <th>Etunimi</th>
+        <th>Sukunimi</th>
+        <th>Sähköposti</th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <tr th:each="appuser : ${asiakkaat}">
+        <td th:text="${appuser.etunimi}"></td>
+        <td th:text="${appuser.sukunimi}"></td>
+        <td th:text="${appuser.sahkoposti}"></td>
+        <td>
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{'/muokkaaasiakasta/' + ${appuser.id}}">
+        Muokkaa</a>
+        </td>
+       <td>
+          <form th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:action="@{/poistaasiakas/{id}(id=${appuser.id})}" method="post">
+						<button type="submit" class="btn btn-danger">Poista</button>
+			</form>
+        </td>
+      </tr>
+    </table>
+
+    <a href="https://softala.haaga-helia.fi:8075/index">
+      <button>Etusivulle</button>
+    </a>
+    <div sec:authorize="!isAuthenticated()">
+      <a href="https://softala.haaga-helia.fi:8075/login">
+        <button>Kirjaudu sisään</button>
+      </a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+      <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Kirjaudu ulos" />
+      </form>
+    </div>
+  </body>
+</html>

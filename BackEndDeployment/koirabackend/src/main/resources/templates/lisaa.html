@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lisää tuote</title>
+  </head>
+  <body>
+    <h1>Lisää uusi tuote</h1>
+    <form action="/lisaa" method="post" th:object="${tuote}">
+      <label for="tuoteNimi">Nimi:</label>
+      <input type="text" id="tuoteNimi" name="tuoteNimi" required /><br /><br />
+
+      <label for="tyyppi">Tyyppi:</label>
+      <select id="tyyppi" name="tyyppi" required>
+        <option
+          th:each="type : ${T(com.viimeiset.koiranvaatekauppa.domain.Tyyppi).values()}"
+          th:value="${type}"
+          th:text="${type.getDisplayName()}"
+        >
+          Tyyppi
+        </option></select
+      ><br /><br />
+
+      <label for="vari">Väri:</label>
+      <input type="text" id="vari" name="vari" required /><br /><br />
+
+      <label for="koko">Koko:</label>
+      <select id="koko" name="koko" required>
+        <option value="S" th:selected="${tuote.koko == 'S'}">S</option>
+        <option value="M" th:selected="${tuote.koko == 'M'}">M</option>
+        <option value="L" th:selected="${tuote.koko == 'L'}">L</option></select
+      ><br /><br />
+
+      <label for="hinta">Hinta:</label>
+      <input
+        type="number"
+        step="0.01"
+        id="hinta"
+        name="hinta"
+        required
+      /><br /><br />
+
+      <label for="valmistaja">Valmistaja:</label>
+      <input
+        type="text"
+        id="valmistaja"
+        name="valmistajaNimi"
+        required
+      /><br /><br />
+
+      <label for="maara">Määrä:</label>
+      <input type="number" id="maara" name="maara" required /><br /><br />
+
+      <button type="submit">Lisää tuote</button>
+    </form>
+
+    <div>
+      <form action="/tuotelista" method="get">
+        <button type="submit">Tuotelista</button>
+      </form>
+    </div>
+
+    <a href="https://softala.haaga-helia.fi:8075/index">
+      <button>Etusivulle</button>
+    </a>
+
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Kirjaudu ulos" />
+    </form>
+  </body>
+</html>

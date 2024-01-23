@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Muokkaa tuotetta</title>
+  </head>
+  <body>
+    <h1>Muokkaa tuotetta</h1>
+    <form
+      th:object="${tuote}"
+      th:action="@{/muokkaa/{id}(id=${tuote.id})}"
+      method="post"
+    >
+      <label for="tuoteNimi">Nimi:</label>
+      <input
+        type="text"
+        id="tuoteNimi"
+        name="tuoteNimi"
+        th:field="*{tuoteNimi}"
+        required
+      /><br /><br />
+
+      <label for="tyyppi">Tyyppi:</label>
+      <select id="tyyppi" name="tyyppi" th:field="*{tyyppi}" required>
+        <option
+          th:each="type : ${T(com.viimeiset.koiranvaatekauppa.domain.Tyyppi).values()}"
+          th:value="${type}"
+          th:text="${type.getDisplayName()}"
+        >
+          Tyyppi
+        </option></select
+      ><br /><br />
+
+      <label for="vari">Väri:</label>
+      <input
+        type="text"
+        id="vari"
+        name="vari"
+        th:field="*{vari}"
+        required
+      /><br /><br />
+
+      <label for="koko">Koko:</label>
+      <select id="koko" name="koko" th:field="*{koko}" required>
+        <option value="S" th:selected="${tuote.koko == 'S'}">S</option>
+        <option value="M" th:selected="${tuote.koko == 'M'}">M</option>
+        <option value="L" th:selected="${tuote.koko == 'L'}">L</option></select
+      ><br /><br />
+
+      <label for="hinta">Hinta:</label>
+      <input
+        type="number"
+        step="0.01"
+        id="hinta"
+        name="hinta"
+        th:field="*{hinta}"
+        required
+      /><br /><br />
+
+      <label for="valmistajaNimi">Valmistaja:</label>
+      <input
+        type="text"
+        id="valmistajaNimi"
+        name="valmistaja.nimi"
+        th:field="*{valmistaja.nimi}"
+        required
+      /><br /><br />
+
+      <label for="maara">Määrä:</label>
+      <input
+        type="number"
+        id="maara"
+        name="maara"
+        th:field="*{maara}"
+        required
+      /><br /><br />
+
+      <button type="submit">Vahvista muutokset</button>
+    </form>
+
+    <div>
+      <form action="/tuotelista" method="get">
+        <button type="submit">Tuotelista</button>
+      </form>
+    </div>
+  </body>
+
+  <a href="https://softala.haaga-helia.fi:8075/index">
+    <button>Etusivulle</button>
+  </a>
+  <form th:action="@{/logout}" method="post">
+    <input type="submit" value="Kirjaudu ulos" />
+  </form>
+</html>

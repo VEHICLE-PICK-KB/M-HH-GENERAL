@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+  <head>
+    <title>Koiranvaatekauppa</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <h2>Tervetuloa Koiranvaatekauppaan!</h2>
+    <form action="/tuotelista" method="get">
+      <button type="submit">Tuotelista</button>
+    </form>
+    <form action="/valmistajalista" method="get">
+      <button type="submit">Valmistajalista</button>
+    </form>
+     <form action="/asiakaslista" method="get">
+      <button type="submit">Asiakaslista</button>
+    </form>
+<div sec:authorize="!isAuthenticated()">
+    <a href="https://softala.haaga-helia.fi:8075/login">
+		<button>Kirjaudu sisään</button>
+	</a>
+</div>
+<div sec:authorize="isAuthenticated()">
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Kirjaudu ulos" />
+	</form>
+	</div>
+	<div class="btn-group">
+        <a
+         th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+         th:href="@{/signup}">Lisää asiakas</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>Lisää asiakas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+	<h1>Sign-up</h1>
+     <div class="col-md-4">
+		<form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post">
+			<div>
+				<label> Username :<input type="text" th:field="*{username}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>	
+			</div>
+			<div>
+				<label> Password :<input type="password" th:field="*{password}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>	
+			</div>
+			<div>
+				<label> Re-type Password: <input type="password" th:field="*{passwordCheck}"></label>
+				<p th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}">Password Match Error</p>	
+			</div>
+			
+			<div>
+				<label>Role :</label>
+				<select id="role" name="role" required>
+        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+        <option value="ROLE_USER">ROLE_USER</option>
+        <option value="USER">USER</option></select>
+				<p th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Error!</p>	
+			</div>
+			
+			<div>
+				<label> First Name :<input type="text" th:field="*{etunimi}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('etunimi')}" th:errors="*{etunimi}">Etunimi vaaditaan</p>	
+			</div>
+			
+			
+			<div>
+				<label> Last Name :<input type="text" th:field="*{sukunimi}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('sukunimi')}" th:errors="*{sukunimi}">Sukunimi vaaditaan</p>	
+			</div>
+			
+			<div>
+				<label> Sähköposti :<input type="text" th:field="*{sahkoposti}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('sahkoposti')}" th:errors="*{sahkoposti}">Sähköposti vaaditaan</p>	
+			</div>
+			
+			
+			
+			
+			
+			
+			
+			
+			<input type="submit" value="Signup"></input>		
+		</form>
+	</div>
+</div>
+</body>
+</html>
